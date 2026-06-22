@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "p5GTn5pW1uc=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\thswn\\source\\repos\\OpenCV_Project\\OpenCV_Project\\OpenCV_Project.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\thswn\\.nuget\\packages\\communitytoolkit.mvvm\\8.4.2\\communitytoolkit.mvvm.8.4.2.nupkg.sha512",
+    "C:\\Users\\thswn\\.nuget\\packages\\opencvsharp4\\4.13.0.20260602\\opencvsharp4.4.13.0.20260602.nupkg.sha512",
+    "C:\\Users\\thswn\\.nuget\\packages\\opencvsharp4.runtime.win\\4.13.0.20260602\\opencvsharp4.runtime.win.4.13.0.20260602.nupkg.sha512",
+    "C:\\Users\\thswn\\.nuget\\packages\\system.memory\\4.6.3\\system.memory.4.6.3.nupkg.sha512"
+  ],
+  "logs": []
+}

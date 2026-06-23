@@ -26,3 +26,4 @@ C:\Users\thswn\source\repos\OpenCV_Project\OpenCV_Project\bin\Debug\net8.0-windo
 C:\Users\thswn\source\repos\OpenCV_Project\OpenCV_Project\obj\Debug\net8.0-windows\OpenCV_Project.csproj.AssemblyReference.cache
 C:\Users\thswn\source\repos\OpenCV_Project\OpenCV_Project\obj\Debug\net8.0-windows\OpenCV_P.E45DB4DE.Up2Date
 C:\Users\thswn\source\repos\OpenCV_Project\OpenCV_Project\bin\Debug\net8.0-windows\CommunityToolkit.Mvvm.dll
+C:\Users\thswn\source\repos\OpenCV_Project\OpenCV_Project\obj\Debug\net8.0-windows\OpenCV_Project.sourcelink.json

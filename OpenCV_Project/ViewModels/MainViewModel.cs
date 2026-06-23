@@ -1,140 +1,120 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using OpenCvSharp;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
+﻿    using CommunityToolkit.Mvvm.ComponentModel;
+    using CommunityToolkit.Mvvm.Input;
+    using System.Collections.ObjectModel;
+    using System.Windows.Media;
+    using System.Windows.Media.Imaging;
+    using OpenCV_Project.Services;
+    using OpenCvSharp;
+
 
 namespace OpenCV_Project.ViewModels
-{
-    public partial class MainViewModel : ObservableObject
     {
+
+    public partial class MainViewModel : ObservableObject
+        {
+
+
+            private readonly OpenCVService _cvService = new();
+            private readonly ImageConverterService _converterService = new();
+
         // =========================
         // 1. UI 상태
         // =========================
 
-        [ObservableProperty]
-        private ImageSource originalImage;
+            [ObservableProperty]
+            private ImageSource originalImage;
 
-        [ObservableProperty]
-        private ImageSource processedImage;
+            [ObservableProperty]
+            private ImageSource processedImage;
 
-        [ObservableProperty]
-        private string resultText = "Ready";
+            [ObservableProperty]
+            private string resultText = "Ready";
 
-        [ObservableProperty]
-        private string shapeText;
+            [ObservableProperty]
+            private string shapeText;
 
-        [ObservableProperty]
-        private string areaText;
+            [ObservableProperty]
+            private string areaText;
 
-        [ObservableProperty]
-        private string circularityText;
+            [ObservableProperty]
+            private string circularityText;
 
-        [ObservableProperty]
-        private string reasonText;
+            [ObservableProperty]
+            private string reasonText;
 
-        [ObservableProperty]
-        private ObservableCollection<object> results = new();
+            [ObservableProperty]
+            private ObservableCollection<object> results = new();
 
 
-        // =========================
-        // 2. Commands
-        // =========================
+            // =========================
+            // 2. Commands
+            // =========================
 
-        [RelayCommand]
-        private void OpenImage()
-        {
-            var dialog = new Microsoft.Win32.OpenFileDialog
+            [RelayCommand]
+            private void OpenImage()
             {
-                Filter = "Image Files|*.png;*.jpg;*.jpeg;*.bmp"
-            };
+                var dialog = new Microsoft.Win32.OpenFileDialog
+                {
+                    Filter = "Image Files|*.png;*.jpg;*.jpeg;*.bmp"
+                };
 
-            if (dialog.ShowDialog() != true)
-                return;
+                if (dialog.ShowDialog() != true)
+                    return;
 
-            string filePath = dialog.FileName;
+                string filePath = dialog.FileName;
 
-            // 1) 원본 표시
-            OriginalImage = new BitmapImage(new Uri(filePath));
+                // 1) 원본 표시
+                OriginalImage = new BitmapImage(new Uri(filePath));
 
-            // 2) OpenCV 처리
-            Mat inputMat = Cv2.ImRead(filePath);
-
-            Mat resultMat = ProcessImage(inputMat);
-
-            // 3) 결과 표시
-
-            ProcessedImage = MatToBitmapImage(resultMat);
-        }
+                // 2) OpenCV 처리
+                var processedMat = _cvService.ProcessImage(filePath);
 
 
-        [RelayCommand]
-        private void Inspect()
-        {
-            ResultText = "Inspecting...";
-        }
+                ProcessedImage = _converterService.Convert(processedMat);
+
+                
+            }
 
 
-        [RelayCommand]
-        private void Reset()
-        {
-            OriginalImage = null;
-            ProcessedImage = null;
-
-            ResultText = "Ready";
-            ShapeText = "";
-            AreaText = "";
-            CircularityText = "";
-            ReasonText = "";
-        }
+            [RelayCommand]
+            private void Inspect()
+            {
+                ResultText = "Inspecting...";
+            }
 
 
-        [RelayCommand]
-        private void SaveResult()
-        {
-            // JSON 저장 or 로그 저장
-        }
+            [RelayCommand]
+            private void Reset()
+            {
+                OriginalImage = null;
+                ProcessedImage = null;
+
+                ResultText = "Ready";
+                ShapeText = "";
+                AreaText = "";
+                CircularityText = "";
+                ReasonText = "";
+            }
 
 
-        // =========================
-        // 3. OpenCV 처리 로직
-        // =========================
-
-        private Mat ProcessImage(Mat input)
-        {
-            Mat processingImage = new Mat();
-            Cv2.CvtColor(input, processingImage, ColorConversionCodes.BGR2GRAY);
-
-            Mat blur = new Mat();
-            Cv2.GaussianBlur(processingImage, blur, new Size(5, 5), 0);
-
-            Mat edges = new Mat();
-            Cv2.Canny(blur, edges, 50, 150);
-
-            return edges;
-        }
+            [RelayCommand]
+            private void SaveResult()
+            {
+                // JSON 저장 or 로그 저장
+            }
 
 
-        // =========================
-        // 4. Mat → WPF 변환
-        // =========================
+            // =========================
+            // 3. OpenCV 처리 로직
+            // =========================
 
-        private BitmapImage MatToBitmapImage(Mat mat)
-        {
-            byte[] imageBytes = mat.ImEncode(".png");
 
-            using var ms = new MemoryStream(imageBytes);
 
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.StreamSource = ms;
-            bitmap.EndInit();
-            bitmap.Freeze();
 
-            return bitmap;
+            // =========================
+            // 4. Mat → WPF 변환
+            // =========================
+
+            
         }
     }
-}

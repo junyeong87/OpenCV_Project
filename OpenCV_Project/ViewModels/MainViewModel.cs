@@ -4,7 +4,7 @@
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
     using OpenCV_Project.Services;
-    using OpenCvSharp;
+    using OpenCV_Project.Models;
 
 
 namespace OpenCV_Project.ViewModels
@@ -28,7 +28,7 @@ namespace OpenCV_Project.ViewModels
             private ImageSource processedImage;
 
             [ObservableProperty]
-            private string resultText = "Ready";
+            private string resultText;
 
             [ObservableProperty]
             private string shapeText;
@@ -43,14 +43,17 @@ namespace OpenCV_Project.ViewModels
             private string reasonText;
 
             [ObservableProperty]
-            private ObservableCollection<object> results = new();
+            private ObservableCollection<InspectionResult> inspectionResults = new();
+
+            [ObservableProperty]
+            private InspectionResult? currentInspection;
 
 
-            // =========================
-            // 2. Commands
-            // =========================
+        // =========================
+        // 2. Commands
+        // =========================
 
-            [RelayCommand]
+        [RelayCommand]
             private void OpenImage()
             {
                 var dialog = new Microsoft.Win32.OpenFileDialog
@@ -79,7 +82,7 @@ namespace OpenCV_Project.ViewModels
             [RelayCommand]
             private void Inspect()
             {
-                ResultText = "Inspecting...";
+                CurrentInspection = _cvService.Inspect();
             }
 
 

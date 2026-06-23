@@ -18,13 +18,13 @@
 
         <!-- 제목 -->
         <Border Grid.Row="0"
-        Style="{StaticResource PanelBorderStyle}">
+             Style="{StaticResource PanelBorderStyle}">
 
-            <TextBlock
-        Text="Vision Inspection System"
-        Style="{StaticResource TitleTextStyle}"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"/>
+                 <TextBlock
+             Text="Vision Inspection System"
+             Style="{StaticResource TitleTextStyle}"
+             HorizontalAlignment="Center"
+             VerticalAlignment="Center"/>
 
         </Border>   
 
@@ -45,22 +45,21 @@
             <!-- Original -->
 
             <Border Grid.Column="0"
-            Margin="0,0,10,0"
-            Style="{StaticResource ImageBorderStyle}">
+                 Margin="0,0,10,0"
+                 Style="{StaticResource ImageBorderStyle}">
 
                 <Grid>
 
                     <TextBlock
-                Text="Original Image"
-                Style="{StaticResource SectionTitleStyle}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"/>
+                        Text="Original Image"
+                        Style="{StaticResource SectionTitleStyle}"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"/>
 
                     <Image
-                Source="{Binding OriginalImage}"
-                Margin="10,40,10,10"
-                Stretch="Uniform"/>
-
+                        Source="{Binding OriginalImage}"
+                        Margin="10,40,10,10"
+                        Stretch="Uniform"/>
                 </Grid>
 
             </Border>
@@ -68,76 +67,76 @@
             <!-- Processed -->
 
             <Border Grid.Column="1"
-            Margin="0,0,10,0"
-            Style="{StaticResource ImageBorderStyle}">
+                 Margin="0,0,10,0"
+                 Style="{StaticResource ImageBorderStyle}">
 
-                <Grid>
+                 <Grid>
 
-                    <TextBlock
-                Text="Processed Image"
-                Style="{StaticResource SectionTitleStyle}"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"/>
+                     <TextBlock
+                          Text="Processed Image"
+                          Style="{StaticResource SectionTitleStyle}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Top"/>
 
-                    <Image
-                Source="{Binding ProcessedImage}"
-                Margin="10,40,10,10"
-                Stretch="Uniform"/>
+                     <Image
+                         Source="{Binding ProcessedImage}"
+                         Margin="10,40,10,10"
+                         Stretch="Uniform"/>
 
-                </Grid>
+                 </Grid>
 
             </Border>
 
             <!-- 결과 -->
             <Border Grid.Column="2"
-        Style="{StaticResource PanelBorderStyle}">
+             Style="{StaticResource PanelBorderStyle}">
 
                 <StackPanel Margin="15">
 
                     <TextBlock
-            Text="Inspection Result"
-            Style="{StaticResource TitleTextStyle}"
-            Margin="0,0,0,20"/>
+                        Text="Inspection Result"
+                        Style="{StaticResource TitleTextStyle}"
+                        Margin="0,0,0,10"/>
 
                     <TextBlock Text="Result"
-                   Style="{StaticResource SectionTitleStyle}"/>
+                        Style="{StaticResource SectionTitleStyle}"/>
 
                     <TextBlock
-            Text="Ready"
-            Style="{StaticResource SectionTitleStyle}"/>
+                        Text="{Binding CurrentInspection.Result}"
+                        Style="{StaticResource ValueTextStyle}"/>
 
                     <TextBlock
-            Text="Shape"
-            Style="{StaticResource SectionTitleStyle}"/>
+                        Text="Shape"
+                        Style="{StaticResource SectionTitleStyle}"/>
 
                     <TextBlock
-            x:Name="ShapeText"
-            Style="{StaticResource ValueTextStyle}"/>
+                        Text="{Binding CurrentInspection.Shape}"
+                        Style="{StaticResource ValueTextStyle}"/>
 
                     <TextBlock
-            Text="Area"
-            Style="{StaticResource SectionTitleStyle}"/>
+                        Text="Area"
+                        Style="{StaticResource SectionTitleStyle}"/>
 
                     <TextBlock
-            x:Name="AreaText"
-            Style="{StaticResource ValueTextStyle}"/>
+                        Text="{Binding CurrentInspection.Area}"
+                        Style="{StaticResource ValueTextStyle}"/>
 
                     <TextBlock
-            Text="Circularity"
-            Style="{StaticResource SectionTitleStyle}"/>
+                         Text="Circularity"
+                         Style="{StaticResource SectionTitleStyle}"/>
 
                     <TextBlock
-            x:Name="CircularityText"
-            Style="{StaticResource ValueTextStyle}"/>
+                        Text="{Binding CurrentInspection.Circularity}"
+                        Style="{StaticResource ValueTextStyle}"/>
 
                     <TextBlock
-            Text="Reason"
-            Style="{StaticResource SectionTitleStyle}"/>
+                        Text="Reason"
+                        Style="{StaticResource SectionTitleStyle}"/>
 
                     <TextBlock
-            x:Name="ReasonText"
-            Style="{StaticResource ValueTextStyle}"
-            TextWrapping="Wrap"/>
+                         Text="{Binding CurrentInspection.Reason}"
+                         Style="{StaticResource ValueTextStyle}"
+                         TextWrapping="Wrap"/>
 
                 </StackPanel>
 
@@ -147,26 +146,29 @@
 
         <!-- 버튼 -->
         <StackPanel
-    Grid.Row="2"
-    Orientation="Horizontal"
-    HorizontalAlignment="Center">
+            Grid.Row="2"
+            Orientation="Horizontal"
+            HorizontalAlignment="Center">
 
             <Button
-        Content="Open Image"
-        Style="{StaticResource PrimaryButtonStyle}"
-        Command="{Binding OpenImageCommand}"        />
+                Content="Open Image"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Command="{Binding OpenImageCommand}"        />
 
             <Button
-        Content="Inspect"
-        Style="{StaticResource PrimaryButtonStyle}"/>
+                Content="Inspect"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Command="{Binding InspectCommand}"/>
 
             <Button
-        Content="Reset"
-        Style="{StaticResource PrimaryButtonStyle}"/>
+                Content="Reset"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Command="{Binding ResetCommmand}"/>
 
             <Button
-        Content="Save Result"
-        Style="{StaticResource PrimaryButtonStyle}"/>
+                Content="Save Result"
+                Style="{StaticResource PrimaryButtonStyle}"
+                Command="{Binding SaveResultCommand}"/>
 
         </StackPanel>
 
@@ -177,24 +179,25 @@
             CornerRadius="5">
 
             <DataGrid
-            Style="{StaticResource DarkDataGridStyle}"
-            AutoGenerateColumns="False">
+                 ItemsSource="{Binding InspectionResults}"
+                 Style="{StaticResource DarkDataGridStyle}"
+                 AutoGenerateColumns="False">
 
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Header="Time" Width="130"/>
+                    <DataGridTextColumn Header="Time" Binding="{Binding Time}" Width="130"/>
 
-                    <DataGridTextColumn Header="File" Width="220"/>
+                    <DataGridTextColumn Header="File" Binding="{Binding File}" Width="220"/>
 
-                    <DataGridTextColumn Header="Shape" Width="120"/>
+                    <DataGridTextColumn Header="Shape" Binding="{Binding Shape}" Width="120"/>
 
-                    <DataGridTextColumn Header="Area" Width="120"/>
+                    <DataGridTextColumn Header="Area" Binding="{Binding Area}" Width="120"/>
 
-                    <DataGridTextColumn Header="Circularity" Width="120"/>
+                    <DataGridTextColumn Header="Circularity" Binding="{Binding Circularity}" Width="120"/>
 
-                    <DataGridTextColumn Header="Result" Width="100"/>
+                    <DataGridTextColumn Header="Result" Binding="{Binding Result}" Width="100"/>
 
-                    <DataGridTextColumn Header="Reason" Width="*"/>
+                    <DataGridTextColumn Header="Reason" Binding="{Binding Reason}" Width="*"/>
 
                 </DataGrid.Columns>
             

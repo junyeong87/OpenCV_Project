@@ -1,0 +1,128 @@
+[
+  {
+    "Time": "2026-06-24T23:40:20.9847757+09:00",
+    "File": "12.jpg",
+    "Area": 35640,
+    "Circularity": 0.897,
+    "Result": "OK",
+    "Reason": "-",
+    "Shape": "Circle"
+  },
+  {
+    "Time": "2026-06-24T23:40:20.9849283+09:00",
+    "File": "12.jpg",
+    "Area": 35462,
+    "Circularity": 0.897,
+    "Result": "OK",
+    "Reason": "-",
+    "Shape": "Circle"
+  },
+  {
+    "Time": "2026-06-24T23:40:20.9849361+09:00",
+    "File": "12.jpg",
+    "Area": 35103.5,
+    "Circularity": 0.748,
+    "Result": "NG",
+    "Reason": "\uC54C \uC218 \uC5C6\uB294 \uD615\uC0C1\uC785\uB2C8\uB2E4.",
+    "Shape": "Unknown"
+  },
+  {
+    "Time": "2026-06-24T23:40:20.9849429+09:00",
+    "File": "12.jpg",
+    "Area": 35633,
+    "Circularity": 0.897,
+    "Result": "OK",
+    "Reason": "-",
+    "Shape": "Circle"
+  },
+  {
+    "Time": "2026-06-24T23:40:20.984949+09:00",
+    "File": "12.jpg",
+    "Area": 35633,
+    "Circularity": 0.897,
+    "Result": "OK",
+    "Reason": "-",
+    "Shape": "Circle"
+  },
+  {
+    "Time": "2026-06-24T23:40:23.8331715+09:00",
+    "File": "123.jpg",
+    "Area": 35640,
+    "Circularity": 0.897,
+    "Result": "OK",
+    "Reason": "-",
+    "Shape": "Circle"
+  },
+  {
+    "Time": "2026-06-24T23:40:23.8331848+09:00",
+    "File": "123.jpg",
+    "Area": 35462,
+    "Circularity": 0.897,
+    "Result": "OK",
+    "Reason": "-",
+    "Shape": "Circle"
+  },
+  {
+    "Time": "2026-06-24T23:40:23.8331951+09:00",
+    "File": "123.jpg",
+    "Area": 29207.5,
+    "Circularity": 0.536,
+    "Result": "NG",
+    "Reason": "\uC54C \uC218 \uC5C6\uB294 \uD615\uC0C1\uC785\uB2C8\uB2E4.",
+    "Shape": "Unknown"
+  },
+  {
+    "Time": "2026-06-24T23:40:23.833204+09:00",
+    "File": "123.jpg",
+    "Area": 35633,
+    "Circularity": 0.897,
+    "Result": "OK",
+    "Reason": "-",
+    "Shape": "Circle"
+  },
+  {
+    "Time": "2026-06-24T23:40:23.8332091+09:00",
+    "File": "123.jpg",
+    "Area": 35633,
+    "Circularity": 0.897,
+    "Result": "OK",
+    "Reason": "-",
+    "Shape": "Circle"
+  },
+  {
+    "Time": "2026-06-24T23:40:26.5290755+09:00",
+    "File": "1414.jpg",
+    "Area": 14475,
+    "Circularity": 0.533,
+    "Result": "OK",
+    "Reason": "-",
+    "Shape": "Triangle"
+  },
+  {
+    "Time": "2026-06-24T23:40:26.5290852+09:00",
+    "File": "1414.jpg",
+    "Area": 71742,
+    "Circularity": 0.62,
+    "Result": "NG",
+    "Reason": "\uC54C \uC218 \uC5C6\uB294 \uD615\uC0C1\uC785\uB2C8\uB2E4.",
+    "Shape": "Unknown"
+  },
+  {
+    "Time": "2026-06-24T23:40:26.5290883+09:00",
+    "File": "1414.jpg",
+    "Area": 30590,
+    "Circularity": 0.553,
+    "Result": "OK",
+    "Reason": "-",
+    "Shape": "Rectangle"
+  },
+  {
+    "Time": "2026-06-24T23:40:26.5290968+09:00",
+    "File": "1414.jpg",
+    "Area": 31068,
+    "Circularity": 0.884,
+    "Result": "NG",
+    "Reason": "\uC6D0\uD615\uB3C4\uAC00 \uAE30\uC900\uBCF4\uB2E4 \uB0AE\uC2B5\uB2C8\uB2E4.",
+    "Shape": "Circle"
+  }
+]

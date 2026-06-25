@@ -163,7 +163,7 @@
             <Button
                 Content="Reset"
                 Style="{StaticResource PrimaryButtonStyle}"
-                Command="{Binding ResetCommmand}"/>
+                Command="{Binding ResetCommand}"/>
 
             <Button
                 Content="Save Result"

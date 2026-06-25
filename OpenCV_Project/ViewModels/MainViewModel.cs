@@ -16,12 +16,13 @@ namespace OpenCV_Project.ViewModels
 
             private readonly OpenCVService _cvService = new();
             private readonly ImageConverterService _converterService = new();
+            private readonly JsonSaveService _jsonSaveService = new();
 
         // =========================
         // 1. UI 상태
         // =========================
 
-            [ObservableProperty]
+        [ObservableProperty]
             private ImageSource originalImage;
 
             [ObservableProperty]
@@ -79,20 +80,33 @@ namespace OpenCV_Project.ViewModels
             }
 
 
+            
             [RelayCommand]
             private void Inspect()
             {
-                CurrentInspection = _cvService.Inspect();
+                //InspectionResults.Clear();
+
+                var results = _cvService.Inspect();
+
+                foreach (var item in results)
+                {
+                    InspectionResults.Add(item);
+                }
+
+                CurrentInspection = InspectionResults.FirstOrDefault();
             }
 
 
-            [RelayCommand]
+        [RelayCommand]
             private void Reset()
             {
+                InspectionResults.Clear();
+
+                CurrentInspection = null;
                 OriginalImage = null;
                 ProcessedImage = null;
 
-                ResultText = "Ready";
+                ResultText = "";
                 ShapeText = "";
                 AreaText = "";
                 CircularityText = "";
@@ -104,6 +118,7 @@ namespace OpenCV_Project.ViewModels
             private void SaveResult()
             {
                 // JSON 저장 or 로그 저장
+                _jsonSaveService.SaveResults(inspectionResults);
             }
 
 

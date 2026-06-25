@@ -32,8 +32,13 @@ namespace OpenCV_Project.Services
             Cv2.GaussianBlur(gray, blur, new Size(5, 5), 0);
 
             _processedImage = new Mat();
-            Cv2.Canny(blur, _processedImage, 50, 150);
-
+            //Cv2.Canny(blur, _processedImage, 50, 150);
+            Cv2.Threshold(
+                blur,
+                _processedImage,
+                0,
+                255,
+                ThresholdTypes.BinaryInv | ThresholdTypes.Otsu);
             return _processedImage;
         }
 
@@ -44,7 +49,7 @@ namespace OpenCV_Project.Services
         /////////////////////////////////////////////////////
         /// 검사
         /////////////////////////////////////////////////////
-        public InspectionResult Inspect()
+        public List<InspectionResult> Inspect()
         {
             if (_processedImage == null)
                 throw new InvalidOperationException("이미지를 먼저 불러오세요.");
@@ -57,87 +62,115 @@ namespace OpenCV_Project.Services
                 RetrievalModes.External,
                 ContourApproximationModes.ApproxSimple);
 
+            List<InspectionResult> results = new();
+
+            // 물체가 하나도 없으면
             if (contours.Length == 0)
             {
-                return new InspectionResult
+                results.Add(new InspectionResult
                 {
                     Time = DateTime.Now,
                     File = _fileName,
                     Result = "NG",
                     Reason = "Contour를 찾을 수 없습니다."
-                };
+                });
+
+                return results;
             }
 
-
-
-            // 가장 큰 외곽선 선택
-            Point[] contour = contours
-                .OrderByDescending(c => Cv2.ContourArea(c))
-                .First();
-
-            // 면적
-            double area = Cv2.ContourArea(contour);
-
-            // 둘레
-            double perimeter = Cv2.ArcLength(contour, true);
-
-            // 원형도
-            double circularity =
-                perimeter == 0
-                ? 0
-                : 4 * Math.PI * area / (perimeter * perimeter);
-
-            // 도형 단순화
-            Point[] approx = Cv2.ApproxPolyDP(
-                contour,
-                0.02 * perimeter,
-                true);
-
-            // 도형 판별
-            string shape;
-
-            switch (approx.Length)
+            // 모든 물체 검사
+            foreach (var contour in contours)
             {
-                case 3:
-                    shape = "Triangle";
-                    break;
+                // 너무 작은 노이즈는 무시
+                double area = Cv2.ContourArea(contour);
 
-                case 4:
-                    shape = "Rectangle";
-                    break;
+                if (area < 100)
+                    continue;
 
-                default:
-                    shape = circularity > 0.85
-                        ? "Circle"
-                        : "Unknown";
-                    break;
+                // 둘레
+                double perimeter = Cv2.ArcLength(contour, true);
+
+                // 원형도
+                double circularity =
+                    perimeter == 0
+                    ? 0
+                    : 4 * Math.PI * area / (perimeter * perimeter);
+
+                // 도형 단순화
+                Point[] approx = Cv2.ApproxPolyDP(
+                    contour,
+                    0.02 * perimeter,
+                    true);
+
+                // 도형 판별
+                string shape;
+
+                switch (approx.Length)
+                {
+                    case 3:
+                        shape = "Triangle";
+                        break;
+
+                    case 4:
+                        shape = "Rectangle";
+                        break;
+
+                    default:
+                        shape = circularity > 0.85
+                            ? "Circle"
+                            : "Unknown";
+                        break;
+                }
+
+                // 판정
+                string result;
+                string reason;
+
+                switch (shape)
+                {
+                    case "Circle":
+                        if (circularity >= 0.89)
+                        {
+                            result = "OK";
+                            reason = "-";
+                        }
+                        else
+                        {
+                            result = "NG";
+                            reason = "원형도가 기준보다 낮습니다.";
+                        }
+                        break;
+
+                    case "Rectangle":
+                        result = "OK";
+                        reason = "-";
+                        break;
+
+                    case "Triangle":
+                        result = "OK";
+                        reason = "-";
+                        break;
+
+                    default:
+                        result = "NG";
+                        reason = "알 수 없는 형상입니다.";
+                        break;
+                }
+
+                // 결과 저장
+                results.Add(new InspectionResult
+                {
+                    Time = DateTime.Now,
+                    File = _fileName,
+                    Shape = shape,
+                    Area = Math.Round(area, 2),
+                    Circularity = Math.Round(circularity, 3),
+                    Result = result,
+                    Reason = reason
+                });
             }
 
-            // 판정
-            string result;
-            string reason;
-
-            if (shape == "Circle" && circularity >= 0.90)
-            {
-                result = "OK";
-                reason = "-";
-            }
-            else
-            {
-                result = "NG";
-                reason = "형상이 기준과 다릅니다.";
-            }
-
-            return new InspectionResult
-            {
-                Time = DateTime.Now,
-                File = _fileName,
-                Shape = shape,
-                Area = Math.Round(area, 2),
-                Circularity = Math.Round(circularity, 3),
-                Result = result,
-                Reason = reason
-            };
+            return results;
         }
     }
 }

@@ -34,7 +34,7 @@ OpenCV를 활용하여 이미지 내 객체를 분석하고, 면적과 원형도
 * Open Image 버튼을 통한 이미지 선택
 * 다양한 이미지 파일 로드
 * 원본 이미지 화면 출력
-* 
+ 
 <img width="1157" height="725" alt="image" src="https://github.com/user-attachments/assets/f61891f1-8c16-4602-8661-78dec868ef82" />
 
 
